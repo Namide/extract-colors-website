@@ -1,0 +1,3 @@
+[submodule "extract-colors"]
+	path = extract-colors
+	url = git@github.com:Namide/extract-colors.git
