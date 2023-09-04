@@ -10,6 +10,3 @@ Jimp.read(src)
       .then(console.log)
       .catch(console.log)
   })
-  .catch((err) => {
-    // Handle an exception.
-  });
