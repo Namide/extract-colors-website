@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="../assets/style.css">
+    <meta name="author" content="Damien Doussaud">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="../assets/extract-color.svg" type="image/svg+xml">
+    <title>Extract colors | Benchmark</title>
+    <meta name="description" content="Javascript library to extract color palette from images">
+  </head>
+
+  <body class="bg-primary from-primary to-accent bg-gradient-to-br">
+
+    
+    <!-- HEADER -->
+    <header class="bg-base-100 text-base-content">
+      <div class="navbar max-w-7xl mx-auto">
+        <div class="navbar-start">
+          <div tabindex="0" class="btn btn-ghost normal-case text-xl">
+            <a href="/">
+              <span class="text-primary">Extract</span><!--
+              --><span class="text-base-content">Colors</span>
+            </a>
+          </div>
+        </div>
+        <div class="navbar-end">
+  
+          <ul class="menu menu-horizontal p-0 hidden md:flex md:items-center">
+            <li>
+              <a href="/demo/" class="btn btn-secondary mr-2 rounded-2xl text-white">
+                Demo
+              </a>
+            </li>
+            <li>
+              <a href="/guide/" class="btn btn-primary mr-2 rounded-2xl text-white">
+                Guide
+              </a>
+            </li>
+            <li>
+              <span class="!bg-transparent p-0">
+                <a href="https://www.npmjs.com/package/extract-colors" target="_blank" rel="noopener noreferrer" class="btn btn-circle btn-ghost !py-0">
+                  <img src="../assets/npm.svg" class="w-9 h-6" alt="NPM">
+                </a>
+              </span>
+            </li>
+            <li>
+              <span class="!bg-transparent p-0 mr-4">
+                <a href="https://github.com/Namide/extract-colors" target="_blank" rel="noopener noreferrer" class="btn btn-circle btn-ghost !py-0">
+                  <img src="../assets/github.svg" class="w-6 h-6" alt="Github">
+                </a>
+              </span>
+            </li>
+          </ul>
+        
+          <div class="dropdown dropdown-end md:hidden">
+            <label tabindex="0" class="btn btn-ghost">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-16 6h16" /></svg>
+            </label>
+            <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+              <li>
+                <a href="/demo/" class="btn btn-secondary text-white mb-2">
+                  Demo
+                </a>
+              </li>
+              <li>
+                <a href="/guide/" class="btn btn-primary text-white mb-2">
+                  Guide
+                </a>
+              </li>
+              <li>
+                <a href="https://www.npmjs.com/package/extract-colors" target="_blank" rel="noopener noreferrer" class="gap-1">
+                  NPM
+                  <svg class="opacity-50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" data-v-7ad94a48=""><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg>
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/Namide/extract-colors" target="_blank" rel="noopener noreferrer" class="gap-1">
+                  GitHub
+                  <svg class="opacity-50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" data-v-7ad94a48=""><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path><polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+
+    <div class="flex flex-col sm:flex-row items-start gap-5 my-10 w-11/12 max-w-7xl mx-auto">
+
+      <!-- TEXT -->
+      <article class="flex-1 bg-base-100 mx-auto px-6 py-12 max-w-full lg:max-w-[calc(100%-14rem)] relative">
+
+        <div class="from-base-200 to-base-100 bg-gradient-to-b absolute top-0 left-0 w-full h-16 opacity-30"></div>
+
+        <h1 class="text-4xl font-bold relative">
+          Benchmark
+        </h1>
+
+        <!-- INSTALL -->
+        <h2 id="installation" class="text-2xl mt-8 mb-2">extract-colors</h2>
+        <p class="mb-2 mt-5">Basic usage of extract colors with default</p>
+
+        <!-- CARDS -->
+        <div id="content" class="flex flex-wrap gap-5">
+        </div>
+
+      </article>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="p-4 bg-neutral text-neutral-content text-sm">
+      <div class="items-center grid-flow-col">
+        <div class="text-center">
+          Released under the <a href="https://www.gnu.org/licenses/" target="_blank" rel="noopener noreferrer" class="link">GNU General Public v3 License</a>.<br>
+          Copyright © 2019 <a href="https://damien-doussaud.com/" target="_blank" rel="author" class="link">Damien Doussaud</a>
+        </div>
+      </div>
+    </footer>
+<!-- 
+    <script src="../assets/benchmark.ts" type="module"></script> -->
+    <script type="module">
+      import "../assets/benchmark.ts";
+    </script>
+    
+  </body>
+</html>

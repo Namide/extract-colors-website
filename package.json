@@ -3,9 +3,9 @@
   "version": "1.1.23",
   "description": "Extract color palettes from images",
   "scripts": {
-    "serve": "parcel ./src/index.html ./src/demo/index.html ./src/guide/index.html --port 3000 ",
+    "serve": "parcel ./src/index.html ./src/demo/index.html ./src/guide/index.html ./src/benchmark/index.html --port 3000 ",
     "prebuild": "rm -rf ./dist",
-    "build": "parcel build ./src/index.html ./src/demo/index.html ./src/guide/index.html"
+    "build": "parcel build ./src/index.html ./src/demo/index.html ./src/guide/index.html ./src/benchmark/index.html"
   },
   "author": "damien@doussaud.fr",
   "license": "GPL-3.0",
@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "highlight.js": "^11.6.0",
+    "node-vibrant": "^3.2.1-alpha.1",
     "petite-vue": "^0.4.1",
     "tailwind-highlightjs": "^2.0.1"
   }
