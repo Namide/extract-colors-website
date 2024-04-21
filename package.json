@@ -1,6 +1,6 @@
 {
   "name": "extract-colors",
-  "version": "1.1.23",
+  "version": "1.1.24",
   "description": "Extract color palettes from images",
   "scripts": {
     "serve": "parcel ./src/index.html ./src/demo/index.html ./src/guide/index.html --port 3000 ",
