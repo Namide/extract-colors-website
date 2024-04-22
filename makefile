@@ -1,3 +1,14 @@
+install:
+	git submodule update --init
+	docker run -ti --rm \
+		-u "node" \
+		-v $(shell pwd):/usr/src/app/extract-colors \
+		-w /usr/src/app/extract-colors \
+		-p 3000\:3000 \
+		-e NPM_CONFIG_PREFIX=/home/node/.npm-global \
+		node:slim \
+		bash -c "cd extract-colors; npm i ; cd ../ ; npm i ;"
+
 dev:
 	python3 -m webbrowser http://localhost:3000/
 	docker run -ti --rm \
