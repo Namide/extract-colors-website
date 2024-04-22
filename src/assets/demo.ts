@@ -18,16 +18,11 @@ const enum AVERAGE_DEFAULT {
 }
 
 let processCurrentId = '' // To avoid old process calculations
-const IMG_THEME = [/* 'moon',*/ 'water', 'sea', 'colors', 'sky']
 const process: (() => void)[] = []
 
-const getRandImg = (id) => {
-  const index = Math.round(Math.random() * 20) + 5
-  const seed = IMG_THEME[id % IMG_THEME.length]
-  return `https://loremflickr.com/640/480/${seed}/?lock=${index}`
-}
+const getRandImg = () => `https://picsum.photos/seed/${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}/640/480`
 
-const getRandImgs = (count: number) => Array(count).fill(1).map((_, i) => getRandImg(i))
+const getRandImgs = (count: number) => Array(count).fill(1).map(getRandImg)
 
 function Input () {
   return {

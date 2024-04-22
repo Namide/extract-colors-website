@@ -1,7 +1,7 @@
 import getPixels from "get-pixels"
 import { extractColors } from 'extract-colors'
 
-const src = `https://loremflickr.com/640/480?lock=${ Math.floor(Math.random() * 0xFFFFFF) }`
+const src = `https://picsum.photos/seed/${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}/640/480`
 
 getPixels(src, (err, pixels) => {
   if(!err) {
