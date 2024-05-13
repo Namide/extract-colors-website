@@ -6,8 +6,7 @@ const src = `https://picsum.photos/seed/${Math.round(Math.random() * Number.MAX_
 getPixels(src, (err, pixels) => {
   if(!err) {
     const data = [...pixels.data]
-    const width = Math.round(Math.sqrt(data.length / 4))
-    const height = width
+    const [width, height] = pixels.shape
 
     extractColors({ data, width, height })
       .then(colors => colors.map(({ hex }) => hex))

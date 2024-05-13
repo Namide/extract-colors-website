@@ -46,7 +46,7 @@ links:
 		node:slim \
 		bash -c "cd extract-colors; npm i ; npm run build ; npm link ; cd ../ ; npm i ; npm link extract-colors ; cd examples/browser-cjs ; npm i ; npm link extract-colors ; cd ../browser-mjs ; npm i ; npm link extract-colors ; cd ../node-cjs ; npm link extract-colors ; cd ../node-mjs ; npm link extract-colors"
 
-rootcode:
+code:
 	docker run -ti --rm \
 		-u "node" \
 		-v $(shell pwd):/usr/src/app/extract-colors \
