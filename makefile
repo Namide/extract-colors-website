@@ -1,56 +1,73 @@
 install:
 	git submodule update --init
+	git -C ./extract-colors checkout master
+	git -C ./extract-colors pull
+	cd extract-colors && $(MAKE) install
 	docker run -ti --rm \
 		-u "node" \
 		-v $(shell pwd):/usr/src/app/extract-colors \
 		-w /usr/src/app/extract-colors \
-		-p 3000\:3000 \
 		-e NPM_CONFIG_PREFIX=/home/node/.npm-global \
-		node:slim \
-		bash -c "cd extract-colors; npm i ; cd ../ ; npm i ;"
+		node:20-slim \
+		npm install
 
 dev:
+	cd extract-colors && $(MAKE) build
+	cp -r extract-colors node_modules/extract-colors
 	python3 -m webbrowser http://localhost:3000/
 	docker run -ti --rm \
 		-u "node" \
 		-v $(shell pwd):/usr/src/app/extract-colors \
 		-w /usr/src/app/extract-colors \
-		-p 3000\:3000 \
+		-p 3000\:5173 \
 		-e NPM_CONFIG_PREFIX=/home/node/.npm-global \
-		node:slim \
-		bash -c "cd extract-colors; npm i ; npm run build ; npm link ; cd ../ ; npm i ; npm link extract-colors ; npm run serve"
+		node:20-slim \
+		npm run dev
 
 build:
+	$(MAKE) install
+	cd extract-colors && $(MAKE) build
+	cp -r extract-colors node_modules/extract-colors
 	docker run -ti --rm \
 		-u "node" \
 		-v $(shell pwd):/usr/src/app \
 		-w /usr/src/app \
 		-u "node" \
-		node:slim \
+		node:20-slim \
 		npm run build
 
+examples-install:
+	$(MAKE) install
+	$(MAKE) build
+	docker run -ti --rm \
+		-u "node" \
+		-v $(shell pwd):/usr/src/app/extract-colors \
+		-w /usr/src/app/extract-colors \
+		node:20-slim \
+		bash -c "npm install --prefix ./examples/browser-cjs; npm install --prefix ./examples/browser-es; npm install --prefix ./examples/node-cjs; npm install --prefix ./examples/node-mjs"
+	cp -r extract-colors examples/browser-cjs/node_modules/extract-colors
+	cp -r extract-colors examples/browser-es/node_modules/extract-colors
+	cp -r extract-colors examples/node-cjs/node_modules/extract-colors
+	cp -r extract-colors examples/node-mjs/node_modules/extract-colors
+
+examples-dev:
+	python3 -m webbrowser http://localhost:3003/
+	python3 -m webbrowser http://localhost:3004/
+	docker run -ti --rm \
+		-u "node" \
+		-v $(shell pwd):/usr/src/app/extract-colors \
+		-w /usr/src/app/extract-colors \
+		-p 3003\:3001 \
+		-p 3004\:3002 \
+		node:20-slim \
+		bash -c "npm run dev --prefix ./examples/node-cjs ; npm run dev --prefix ./examples/node-mjs ; npm run dev --prefix ./examples/browser-cjs & npm run dev --prefix ./examples/browser-es"
+
 code:
 	docker run -ti --rm \
 		-u "node" \
 		-v $(shell pwd):/usr/src/app/extract-colors \
 		-w /usr/src/app/extract-colors \
-		-p 3001\:3001 \
-		node:slim \
-		bash
-
-links:
-	docker run -ti --rm \
-		-u "node" \
-		-v $(shell pwd):/usr/src/app/extract-colors \
-		-w /usr/src/app/extract-colors \
-		node:slim \
-		bash -c "cd extract-colors; npm i ; npm run build ; npm link ; cd ../ ; npm i ; npm link extract-colors ; cd examples/browser-cjs ; npm i ; npm link extract-colors ; cd ../browser-mjs ; npm i ; npm link extract-colors ; cd ../node-cjs ; npm link extract-colors ; cd ../node-mjs ; npm link extract-colors"
-
-code:
-	docker run -ti --rm \
-		-u "node" \
-		-v $(shell pwd):/usr/src/app/extract-colors \
-		-w /usr/src/app/extract-colors \
-		-p 3001\:3001 \
-		node:slim \
+		-p 3001\:5173 \
+		-p 3002\:4173 \
+		node:20-slim \
 		bash

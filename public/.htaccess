@@ -1,0 +1,49 @@
+RewriteEngine On
+RewriteBase /
+
+# if any html exists based on current path then serve it
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^(.*)$ $1.html [L]
+
+# if index.html exists then serve it if filepath is empty (checked by RewriteRule ^$)
+RewriteCond %{DOCUMENT_ROOT}/index.html -f
+RewriteRule ^$ /index.html [L]
+
+# any thing left should go to index.php as path
+# the RewriteCond !-f is used to avoid index.php loopback
+# the RewriteCond !-d is NOT used so that if folder exists then it does not show directory listing
+# may want to use some condition to show index.html in that folder if exists
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?path=$1 [L]
+
+
+
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+
+#   RewriteCond %{HTTPS} off
+#   RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+#   RewriteBase /
+#   RewriteRule ^index\.html$ - [L]
+
+#   RewriteCond %{REQUEST_FILENAME} !-f
+#   RewriteCond %{REQUEST_FILENAME} !-d
+#   RewriteRule . /index.html [L]
+# </IfModule>
+
+# <IfModule mod_deflate.c>
+#   Addtype text/plain .glb
+#   AddOutputFilterByType DEFLATE text/plain
+#   AddOutputFilterByType DEFLATE text/html
+#   AddOutputFilterByType DEFLATE text/xml
+#   AddOutputFilterByType DEFLATE text/css
+#   AddOutputFilterByType DEFLATE application/xml
+#   AddOutputFilterByType DEFLATE application/xhtml+xml
+#   AddOutputFilterByType DEFLATE application/rss+xml
+#   AddOutputFilterByType DEFLATE application/javascript
+#   AddOutputFilterByType DEFLATE application/x-javascript
+#   AddOutputFilter DEFLATE .shtml
+# </IfModule>

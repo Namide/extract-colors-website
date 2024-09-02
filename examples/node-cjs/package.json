@@ -8,6 +8,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "extract-colors": "^4.0.6",
     "get-pixels": "^3.3.3"
   },
   "devDependencies": {

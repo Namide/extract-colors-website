@@ -1,0 +1,25 @@
+const path = require('path')
+const { extractColors } = require('extract-colors/lib/extract-colors.mjs')
+const getPixels = require("get-pixels")
+
+const src = path.join(__dirname, './my-image.jpg')
+
+const options = {
+  pixels: 64000,
+  distance: 0.22,
+  colorValidator: (red, green, blue, alpha = 255) => alpha > 250,
+  saturationDistance: 0.2,
+  lightnessDistance: 0.2,
+  hueDistance: 0.083333333
+}
+
+getPixels(src, (err, pixels) => {
+  if(!err) {
+    const data = [...pixels.data]
+    const [width, height] = pixels.shape
+
+    extractColors({ data, width, height })
+      .then(console.log)
+      .catch(console.log)
+  }
+})

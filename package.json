@@ -1,29 +1,35 @@
 {
-  "name": "extract-colors",
-  "version": "1.1.24",
-  "description": "Extract color palettes from images",
+  "name": "extract-colors-website",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "serve": "parcel ./src/index.html ./src/demo/index.html ./src/guide/index.html --port 3000 ",
-    "prebuild": "rm -rf ./dist",
-    "build": "parcel build ./src/index.html ./src/demo/index.html ./src/guide/index.html"
-  },
-  "author": "damien@doussaud.fr",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/Namide/extract-colors/issues"
-  },
-  "homepage": "https://github.com/Namide/extract-colors#readme",
-  "devDependencies": {
-    "@types/highlight.js": "^10.1.0",
-    "daisyui": "^2.39.1",
-    "parcel": "^2.12.0",
-    "postcss": "^8.4.19",
-    "tailwindcss": "^3.2.4",
-    "typescript": "^4.8.4"
+    "dev": "vite --host",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview --host",
+    "build-only": "vite-ssg build",
+    "type-check": "vue-tsc --build --force"
   },
   "dependencies": {
-    "highlight.js": "^11.6.0",
-    "petite-vue": "^0.4.1",
-    "tailwind-highlightjs": "^2.0.1"
+    "@unhead/vue": "^1.10.0",
+    "tailwind-highlightjs": "^2.0.1",
+    "vue": "^3.4.29",
+    "vue-router": "^4.3.3"
+  },
+  "devDependencies": {
+    "@tsconfig/node20": "^20.1.4",
+    "@types/node": "^20.14.5",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "@vue/tsconfig": "^0.5.1",
+    "autoprefixer": "^10.4.20",
+    "daisyui": "^4.12.10",
+    "npm-run-all2": "^6.2.0",
+    "postcss": "^8.4.43",
+    "shiki": "^1.16.1",
+    "tailwindcss": "^3.4.10",
+    "typescript": "~5.4.0",
+    "vite": "^5.3.1",
+    "vite-ssg": "^0.23.8",
+    "vue-tsc": "^2.0.21"
   }
 }

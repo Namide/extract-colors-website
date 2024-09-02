@@ -1,0 +1,16 @@
+import { extractColors } from 'extract-colors/lib/extract-colors.mjs'
+
+const src = "my-image.jpg"
+
+const options = {
+  pixels: 64000,
+  distance: 0.22,
+  colorValidator: (red, green, blue, alpha = 255) => alpha > 250,
+  saturationDistance: 0.2,
+  lightnessDistance: 0.2,
+  hueDistance: 0.083333333
+}
+
+extractColors(src, options)
+  .then(console.log)
+  .catch(console.error)
