@@ -16,10 +16,21 @@ jobs:
           submodules: "recursive"
           ssh-key: ${{ secrets.SSH_KEY }}
 
-      - name: Install
+      - name: Install lib
+        run: npm ci
+        working-directory: extract-colors
+
+      - name: Install website
         run: npm ci
 
-      - name: Build
+      - name: Build lib
+        run: npm run build
+        working-directory: extract-colors
+
+      - name: Copy lib
+        run: cp -r extract-colors node_modules/extract-colors
+
+      - name: Build website
         run: npm run build
 
       - name: Upload files
