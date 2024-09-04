@@ -4,17 +4,16 @@
   @apply to-neutral-800;
   @apply bg-gradient-to-br;
   @apply rounded-3xl;
-  @apply px-5;
-  @apply py-7;
+  @apply px-0 py-3;
   @apply text-neutral-content;
 
 }
 .ec-code pre {
-  @apply !bg-transparent;
+  @apply !bg-transparent overflow-y-auto;
 }
 .ec-code pre code {
   @apply bg-transparent;
-  @apply p-0;
+  @apply pt-0 pb-0 pl-0 w-fit border-y-[1rem] border-x-[1.25rem] border-transparent block;
 }
 
 /* Chrome, Safari, Edge, Opera */
