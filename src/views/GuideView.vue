@@ -8,6 +8,8 @@ import installNodeJsCode from "./code/install-node.js.txt";
 import outputJsCode from "./code/output.js.txt";
 import moduleBrowserCode from "./code/module-browser.js.txt";
 import moduleNodeCode from "./code/module-node.js.txt";
+import workerMainCode from "./code/worker-main.js.txt";
+import workerFileCode from "./code/worker-file.js.txt";
 import optionsBrowserCode from "./code/options-browser.js.txt";
 import optionsNodeCode from "./code/options-node.js.txt";
 
@@ -41,6 +43,7 @@ useHead({
             <span>Advanced</span>
           </li>
           <li><a href="#module-usage">Module usage</a></li>
+          <li><a href="#web-worker-usage">Web Worker usage</a></li>
           <li><a href="#options">Options</a></li>
           <li><a href="#pixels" class="ml-2 text-xs leading-3">pixels</a></li>
           <li>
@@ -54,6 +57,11 @@ useHead({
           <li>
             <a href="#cross-origin" class="ml-2 text-xs leading-3"
               >crossOrigin</a
+            >
+          </li>
+          <li>
+            <a href="#request-mode" class="ml-2 text-xs leading-3"
+              >requestMode</a
             >
           </li>
           <li>
@@ -207,6 +215,48 @@ useHead({
         </div>
       </div>
 
+      <!-- WORKER USAGE -->
+      <h2 id="web-worker-usage" class="text-2xl mt-8 mb-2">
+        Web Workers (for browser)
+      </h2>
+      <CodeTabs :browser="workerMainCode" :worker="workerFileCode"></CodeTabs>
+
+      <div class="alert alert-info shadow-lg mt-5">
+        <div>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            class="stroke-current flex-shrink-0 w-6 h-6"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+            ></path>
+          </svg>
+          <p>
+            This Web Worker example work with
+            <a href="https://vite.dev/" target="_blank" class="link">Vite</a
+            >.<br />
+            You need to adapt the import of your <code>worker.js</code> file if
+            you use an othe module bundler.
+          </p>
+          <p>
+            Don't forget to add the <code>worker.js</code> file and import it in
+            the main thread. If you need more informations about the Web Worker
+            you can read the article
+            <a
+              href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers"
+              target="_blank"
+              class="link"
+              >Using Web Workers</a
+            >.
+          </p>
+        </div>
+      </div>
+
       <!-- OPTIONS -->
       <h2 id="options" class="text-2xl mt-8 mb-2">Options</h2>
       <p class="mb-2 mt-5">Example of custom options</p>
@@ -337,6 +387,31 @@ useHead({
             <tr>
               <td>String</td>
               <td>null</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="request-mode" class="text-xl mt-6 mb-2 font-bold">
+        requestMode (Web Workers in browser)
+      </h3>
+      <p class="my-5">
+        Only for Web Workers in browser: it's used to determine if cross-origin
+        requests lead to valid responses, and which properties of the response
+        are readable
+      </p>
+      <div class="overflow-x-auto">
+        <table class="table w-auto">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>String</td>
+              <td>cors</td>
             </tr>
           </tbody>
         </table>

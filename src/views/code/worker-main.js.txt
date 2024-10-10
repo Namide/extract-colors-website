@@ -1,0 +1,9 @@
+import ExtractColorsWorker from "./worker.js?worker"
+
+const worker = new ExtractColorsWorker()
+worker.addEventListener("message", message => {
+  console.log(message.data)
+})
+
+const src = "my-image.jpg"
+worker.postMessage(src)
