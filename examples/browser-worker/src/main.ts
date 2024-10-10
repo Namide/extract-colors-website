@@ -1,14 +1,10 @@
-import InlineWorker from "./worker.js?worker";
-
-const worker = new InlineWorker();
-worker.addEventListener("message", (message) => {
-  console.log(message.data);
-  document.body.innerHTML = JSON.stringify(
-    message.data,
-    null,
-    "&nbsp;"
-  ).replace(/\n/gi, "<br>");
-});
+import { extractColors } from "extract-colors/lib/worker-wrapper";
 
 const src = `https://picsum.photos/seed/${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}/640/480`;
-worker.postMessage([src, { requestMode: "cors" }]);
+extractColors(src, { crossOrigin: "anonymous" }).then((list) => {
+  console.log(list);
+  document.body.innerHTML = JSON.stringify(list, null, "&nbsp;").replace(
+    /\n/gi,
+    "<br>"
+  );
+});

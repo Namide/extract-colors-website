@@ -4,14 +4,11 @@ import { ref, computed } from "vue";
 const props = defineProps<{
   browser?: string;
   node?: string;
-  worker?: string;
 }>();
 
-const type = ref<"browser" | "node" | "worker">("browser");
+const type = ref<"browser" | "node">("browser");
 
-const count = computed(
-  () => (props.browser ? 1 : 0) + (props.node ? 1 : 0) + (props.worker ? 1 : 0)
-);
+const count = computed(() => (props.browser ? 1 : 0) + (props.node ? 1 : 0));
 </script>
 
 <template>
@@ -38,17 +35,6 @@ const count = computed(
     >
       Node.js
     </button>
-    <button
-      v-if="worker"
-      @click="type = 'worker'"
-      class="tab tab-bordered [--tab-border-color:transparent]"
-      :class="{
-        'tab-active !bg-neutral !text-neutral-content   [--tab-bg:var(--fallback-n,oklch(var(--n)))] [--tab-border-color:var(--fallback-n,oklch(var(--n)))] [--tab-color:var(--fallback-nc,oklch(var(--nc)))]':
-          type === 'worker',
-      }"
-    >
-      worker.js
-    </button>
   </div>
   <div
     class="ec-code"
@@ -57,7 +43,6 @@ const count = computed(
     <Transition mode="out-in">
       <div v-if="type === 'browser'" v-html="browser"></div>
       <div v-else-if="type === 'node'" v-html="node"></div>
-      <div v-else-if="type === 'worker'" v-html="worker"></div>
     </Transition>
     <!-- <div
       class="col-start-1 row-start-1 flex items-start justify-end p-2 rtl:justify-start"

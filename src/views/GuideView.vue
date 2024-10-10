@@ -8,8 +8,7 @@ import installNodeJsCode from "./code/install-node.js.txt";
 import outputJsCode from "./code/output.js.txt";
 import moduleBrowserCode from "./code/module-browser.js.txt";
 import moduleNodeCode from "./code/module-node.js.txt";
-import workerMainCode from "./code/worker-main.js.txt";
-import workerFileCode from "./code/worker-file.js.txt";
+import workerCode from "./code/worker.js.txt";
 import optionsBrowserCode from "./code/options-browser.js.txt";
 import optionsNodeCode from "./code/options-node.js.txt";
 
@@ -43,7 +42,7 @@ useHead({
             <span>Advanced</span>
           </li>
           <li><a href="#module-usage">Module usage</a></li>
-          <li><a href="#web-worker-usage">Web Worker usage</a></li>
+          <li><a href="#web-workers">Web Workers</a></li>
           <li><a href="#options">Options</a></li>
           <li><a href="#pixels" class="ml-2 text-xs leading-3">pixels</a></li>
           <li>
@@ -216,46 +215,10 @@ useHead({
       </div>
 
       <!-- WORKER USAGE -->
-      <h2 id="web-worker-usage" class="text-2xl mt-8 mb-2">
-        Web Workers (for browser)
+      <h2 id="web-workers" class="text-2xl mt-8 mb-2">
+        Web Workers (browser only)
       </h2>
-      <CodeTabs :browser="workerMainCode" :worker="workerFileCode"></CodeTabs>
-
-      <div class="alert alert-info shadow-lg mt-5">
-        <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="stroke-current flex-shrink-0 w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
-          <p>
-            This Web Worker example work with
-            <a href="https://vite.dev/" target="_blank" class="link">Vite</a
-            >.<br />
-            You need to adapt the import of your <code>worker.js</code> file if
-            you use an othe module bundler.
-          </p>
-          <p>
-            Don't forget to add the <code>worker.js</code> file and import it in
-            the main thread. If you need more informations about the Web Worker
-            you can read the article
-            <a
-              href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers"
-              target="_blank"
-              class="link"
-              >Using Web Workers</a
-            >.
-          </p>
-        </div>
-      </div>
+      <CodeTabs :browser="workerCode"></CodeTabs>
 
       <!-- OPTIONS -->
       <h2 id="options" class="text-2xl mt-8 mb-2">Options</h2>

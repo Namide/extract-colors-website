@@ -110,7 +110,8 @@ onMounted(() => {
           <span class="badge badge-ghost">fast</span> and
           <span class="badge badge-ghost">lightweight</span><br />
           support
-          <span class="badge badge-ghost">browser</span> and
+          <span class="badge badge-ghost">browser</span>,
+          <span class="badge badge-ghost">Web Workers</span> and
           <span class="badge badge-ghost">Node.js</span>
         </p>
 

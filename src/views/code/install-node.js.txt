@@ -1,8 +1,8 @@
-const path = require('path')
+const path = require("path")
 const getPixels = require("get-pixels")
-const { extractColors } = require('extract-colors')
+const { extractColors } = require("extract-colors")
 
-const src = path.join(__dirname, './my-image.jpg')
+const src = path.join(__dirname, "./my-image.jpg")
 
 getPixels(src, (err, pixels) => {
   if(!err) {
