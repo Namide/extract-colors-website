@@ -192,23 +192,23 @@ useHead({
 
       <div class="alert alert-info shadow-lg mt-5">
         <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="stroke-current flex-shrink-0 w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
           <p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="stroke-current flex-shrink-0 w-6 h-6 inline-block"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
             The NodeJs example use <code>get-pixels</code> but you can change
             the lib.<br />
-            Just send and ImageData object to
+            Just send the ImageData object to
             <code>extractColors(imageData)</code> for NodeJs.
           </p>
         </div>
@@ -311,23 +311,25 @@ useHead({
       <p class="my-5">Test function to enable only some colors.</p>
       <div class="overflow-x-auto">
         <table class="table w-auto">
-          <tr>
-            <th class="block">Type</th>
-            <td>Function</td>
-          </tr>
-          <tr>
-            <th class="block">Signature</th>
-            <td>
-              <code
-                >(red: number, green: number, blue: number, alpha?: number) =>
-                boolean</code
-              >
-            </td>
-          </tr>
-          <tr>
-            <th class="block">Default</th>
-            <td>(red, green, blue, alpha = 255) =&gt; alpha &gt; 250</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th class="block">Type</th>
+              <td>Function</td>
+            </tr>
+            <tr>
+              <th class="block">Signature</th>
+              <td>
+                <code
+                  >(red: number, green: number, blue: number, alpha?: number) =>
+                  boolean</code
+                >
+              </td>
+            </tr>
+            <tr>
+              <th class="block">Default</th>
+              <td>(red, green, blue, alpha = 255) =&gt; alpha &gt; 250</td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
@@ -349,7 +351,7 @@ useHead({
           <tbody>
             <tr>
               <td>String</td>
-              <td>null</td>
+              <td>""</td>
             </tr>
           </tbody>
         </table>

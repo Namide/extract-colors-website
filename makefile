@@ -37,8 +37,8 @@ build:
 		npm run build
 
 examples-install:
-	$(MAKE) install
-	$(MAKE) build
+	cd extract-colors && $(MAKE) install
+	cd extract-colors && $(MAKE) build
 	docker run -ti --rm \
 		-u "node" \
 		-v $(shell pwd):/usr/src/app/extract-colors \
