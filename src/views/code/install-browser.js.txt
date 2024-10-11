@@ -1,6 +1,6 @@
-import { extractColors } from 'extract-colors'
+import { extractColors } from "extract-colors"
 
-const src = 'my-image.jpg'
+const src = "my-image.jpg"
 
 extractColors(src)
   .then(console.log)

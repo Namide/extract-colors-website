@@ -1,4 +1,4 @@
-import { extractColors } from 'extract-colors/lib/extract-colors.mjs'
+import { extractColors } from "extract-colors/lib/extract-colors.mjs"
 
 const src = "my-image.jpg"
 

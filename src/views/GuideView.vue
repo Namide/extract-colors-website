@@ -8,6 +8,7 @@ import installNodeJsCode from "./code/install-node.js.txt";
 import outputJsCode from "./code/output.js.txt";
 import moduleBrowserCode from "./code/module-browser.js.txt";
 import moduleNodeCode from "./code/module-node.js.txt";
+import workerCode from "./code/worker.js.txt";
 import optionsBrowserCode from "./code/options-browser.js.txt";
 import optionsNodeCode from "./code/options-node.js.txt";
 
@@ -41,6 +42,7 @@ useHead({
             <span>Advanced</span>
           </li>
           <li><a href="#module-usage">Module usage</a></li>
+          <li><a href="#web-workers">Web Workers</a></li>
           <li><a href="#options">Options</a></li>
           <li><a href="#pixels" class="ml-2 text-xs leading-3">pixels</a></li>
           <li>
@@ -54,6 +56,11 @@ useHead({
           <li>
             <a href="#cross-origin" class="ml-2 text-xs leading-3"
               >crossOrigin</a
+            >
+          </li>
+          <li>
+            <a href="#request-mode" class="ml-2 text-xs leading-3"
+              >requestMode</a
             >
           </li>
           <li>
@@ -185,27 +192,33 @@ useHead({
 
       <div class="alert alert-info shadow-lg mt-5">
         <div>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            class="stroke-current flex-shrink-0 w-6 h-6"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            ></path>
-          </svg>
           <p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              class="stroke-current flex-shrink-0 w-6 h-6 inline-block"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
             The NodeJs example use <code>get-pixels</code> but you can change
             the lib.<br />
-            Just send and ImageData object to
+            Just send the ImageData object to
             <code>extractColors(imageData)</code> for NodeJs.
           </p>
         </div>
       </div>
+
+      <!-- WORKER USAGE -->
+      <h2 id="web-workers" class="text-2xl mt-8 mb-2">
+        Web Workers (browser only)
+      </h2>
+      <CodeTabs :browser="workerCode"></CodeTabs>
 
       <!-- OPTIONS -->
       <h2 id="options" class="text-2xl mt-8 mb-2">Options</h2>
@@ -298,23 +311,25 @@ useHead({
       <p class="my-5">Test function to enable only some colors.</p>
       <div class="overflow-x-auto">
         <table class="table w-auto">
-          <tr>
-            <th class="block">Type</th>
-            <td>Function</td>
-          </tr>
-          <tr>
-            <th class="block">Signature</th>
-            <td>
-              <code
-                >(red: number, green: number, blue: number, alpha?: number) =>
-                boolean</code
-              >
-            </td>
-          </tr>
-          <tr>
-            <th class="block">Default</th>
-            <td>(red, green, blue, alpha = 255) =&gt; alpha &gt; 250</td>
-          </tr>
+          <tbody>
+            <tr>
+              <th class="block">Type</th>
+              <td>Function</td>
+            </tr>
+            <tr>
+              <th class="block">Signature</th>
+              <td>
+                <code
+                  >(red: number, green: number, blue: number, alpha?: number) =>
+                  boolean</code
+                >
+              </td>
+            </tr>
+            <tr>
+              <th class="block">Default</th>
+              <td>(red, green, blue, alpha = 255) =&gt; alpha &gt; 250</td>
+            </tr>
+          </tbody>
         </table>
       </div>
 
@@ -336,7 +351,32 @@ useHead({
           <tbody>
             <tr>
               <td>String</td>
-              <td>null</td>
+              <td>""</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 id="request-mode" class="text-xl mt-6 mb-2 font-bold">
+        requestMode (Web Workers in browser)
+      </h3>
+      <p class="my-5">
+        Only for Web Workers in browser: it's used to determine if cross-origin
+        requests lead to valid responses, and which properties of the response
+        are readable
+      </p>
+      <div class="overflow-x-auto">
+        <table class="table w-auto">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>String</td>
+              <td>cors</td>
             </tr>
           </tbody>
         </table>

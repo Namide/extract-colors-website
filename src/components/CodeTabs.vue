@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 
-const props = defineProps<{ browser?: string; node?: string }>();
+const props = defineProps<{
+  browser?: string;
+  node?: string;
+}>();
 
 const type = ref<"browser" | "node">("browser");
 
-const onlyOne = computed(() => !props.browser || !props.node);
+const count = computed(() => (props.browser ? 1 : 0) + (props.node ? 1 : 0));
 </script>
 
 <template>
-  <div v-if="!onlyOne" class="tabs tabs-lifted mt-8 !block">
+  <div v-if="count > 1" class="tabs tabs-lifted mt-8 !block">
     <button
       v-if="browser"
       @click="type = 'browser'"
@@ -35,7 +38,7 @@ const onlyOne = computed(() => !props.browser || !props.node);
   </div>
   <div
     class="ec-code"
-    :class="{ 'rounded-tl-none': type === 'browser' && !onlyOne }"
+    :class="{ 'rounded-tl-none': type === 'browser' && count > 1 }"
   >
     <Transition mode="out-in">
       <div v-if="type === 'browser'" v-html="browser"></div>
