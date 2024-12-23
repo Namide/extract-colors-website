@@ -7,7 +7,8 @@ import installBrowserJsCode from "./code/install-browser.js.txt";
 import installNodeBashCode from "./code/install-node.bash.txt";
 import installNodeJsCode from "./code/install-node.js.txt";
 import { onMounted, ref } from "vue";
-import type { FinalColor } from "../types";
+import ColorRound from "@/components/ColorRound.vue";
+import type { DetailledColor } from "extract-colors/lib/types/Color";
 
 useHead({
   title: "Extract colors",
@@ -21,7 +22,7 @@ useHead({
 
 const imgEl = ref<HTMLImageElement>();
 const isLoading = ref(true);
-const colors = ref<FinalColor[]>([]);
+const colors = ref<DetailledColor[]>([]);
 
 const process: (() => void)[] = [];
 
@@ -59,10 +60,10 @@ async function updateImg() {
     }
   };
 
-  const list = await extractColors(src, {
+  const data = await extractColors(src, {
     crossOrigin: "anonymous",
   });
-  colors.value = list;
+  colors.value = data.list;
   isLoading.value = false;
 
   // container.append(
@@ -176,21 +177,11 @@ onMounted(() => {
               class="flex justify-left flex-wrap gap-2 min-h-6"
               :class="{ invisible: isLoading }"
             >
-              <li
-                class="leading-[0]"
+              <ColorRound
                 v-for="(color, index) of colors"
+                :color="color"
                 :key="index"
-              >
-                <span
-                  class="tooltip"
-                  :data-tip="`${(color.area * 100).toFixed(2)}% - ${color.hex}`"
-                >
-                  <span
-                    class="w-6 h-6 rounded-xl block border border-black border-opacity-20"
-                    :style="{ backgroundColor: color.hex }"
-                  ></span>
-                </span>
-              </li>
+              />
             </ul>
           </div>
         </div>

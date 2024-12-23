@@ -58,9 +58,14 @@ const types = ref<ColorClassification[]>(["dominants", "accents"]);
 
 <template>
   <div class="mt-4">
-    <label class="label"
-      ><span class="label-text opacity-60">Color classification</span></label
+    <div
+      class="tooltip"
+      data-tip="Add classification properties to extract some color types"
     >
+      <label class="label"
+        ><span class="label-text opacity-60">Color classification</span></label
+      >
+    </div>
     <div class="flex flex-wrap gap-2">
       <button
         @click="remove(sel)"

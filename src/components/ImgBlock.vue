@@ -14,6 +14,7 @@ const props = defineProps<{
   pixels: number;
   distance: number;
   fastDistance: number;
+  autoGenerate: boolean;
   classifiedColors: ColorClassification[];
 }>();
 
@@ -29,7 +30,7 @@ const processCurrentId = ref("");
 
 onMounted(() => {
   const image = new Image();
-  const id = `${props.pixels}${props.distance}${props.fastDistance}${props.classifiedColors.join(",")}`;
+  const id = `${props.pixels}${props.distance}${props.fastDistance}${props.classifiedColors.join(",")}${props.autoGenerate}`;
 
   processCurrentId.value = id;
 
@@ -63,10 +64,10 @@ onMounted(() => {
         fastDistance: Number(props.fastDistance),
         colorClassifications: props.classifiedColors,
         crossOrigin: "anonymous",
+        defaultColors: props.autoGenerate,
       })
         .then((data) => {
           time.value = Date.now() - initTime;
-          console.log(data);
 
           const { list, ...other } = data;
 
@@ -151,7 +152,10 @@ onMounted(() => {
         </ul>
       </div>
 
-      <details class="mt-4 bg-base-200 rounded-lg">
+      <details
+        v-if="Object.values(classified).flat(2).length > 0"
+        class="mt-4 bg-base-200 rounded-lg"
+      >
         <summary class="btn btn-sm w-full">Color classification</summary>
 
         <div class="px-4 pb-4">

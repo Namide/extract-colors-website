@@ -29,6 +29,7 @@ const getRandImgs = (count: number) => Array(count).fill(1).map(getRandImg);
 
 const pixels = ref(EXTRACTOR_DEFAULT.PIXELS);
 const distance = ref(EXTRACTOR_DEFAULT.DISTANCE);
+const autoGenerate = ref(false);
 const fastDistance = ref(
   Math.round(EXTRACTOR_DEFAULT.FAST_DISTANCE * 1000) / 1000
 );
@@ -44,7 +45,8 @@ const list = computed(() =>
       pixels.value +
       distance.value +
       fastDistance.value +
-      types.value.join(","),
+      types.value.join(",") +
+      autoGenerate.value,
   }))
 );
 
@@ -130,7 +132,10 @@ function uploadFile(event: Event) {
 
         <!-- Fast distance -->
         <div class="form-control mt-2">
-          <div class="tooltip" data-tip="from 0 to 1">
+          <div
+            class="tooltip"
+            data-tip="From 0 to 1 to reduce total calculation time by removing near colors"
+          >
             <label class="label">
               <span class="label-text opacity-60">Fast distance</span>
             </label>
@@ -155,43 +160,30 @@ function uploadFile(event: Event) {
           </div>
         </div>
 
+        <!-- Color classification -->
         <SelectTags v-model="types" />
 
-        <!-- 
-        <multiselect
-          v-model="types"
-          :options="[
-            'dominants',
-            'accents',
-            'dominantsLight',
-            'dominantsMidtone',
-            'dominantsDark',
-            'accentsLight',
-            'accentsMidtone',
-            'accentsDark',
-            'dullests',
-            'vivids',
-            'dullestsLight',
-            'dullestsMidtone',
-            'dullestsDark',
-            'vividsLight',
-            'vividsMidtone',
-            'vividsDark',
-            'lightests',
-            'midtones',
-            'darkests',
-            'warmest',
-            'coolest',
-            'warmestLight',
-            'warmestMidtone',
-            'warmestDark',
-            'coolestLight',
-            'coolestMidtone',
-            'coolestDark',
-          ]"
-          :multiple="true"
-          :taggable="true"
-        ></multiselect> -->
+        <!-- Default colors -->
+        <div class="form-control mt-2">
+          <div
+            class="tooltip"
+            data-tip="generate colors for color classifications without extracted colors"
+          >
+            <label class="label mt-2 pb-0">
+              <span class="label-text opacity-60">Default colors</span>
+            </label>
+          </div>
+          <div class="flex items-center">
+            <label class="label cursor-pointer">
+              <span class="label-text mr-5">Auto generate</span>
+              <input
+                type="checkbox"
+                class="toggle toggle-secondary toggle-sm"
+                v-model="autoGenerate"
+              />
+            </label>
+          </div>
+        </div>
 
         <div class="divider text-sm mt-8">Images</div>
 
@@ -222,8 +214,9 @@ function uploadFile(event: Event) {
         :src="src"
         :pixels="pixels"
         :distance="distance"
-        :fastDistance="fastDistance"
-        :classifiedColors="types"
+        :fast-distance="fastDistance"
+        :classified-colors="types"
+        :auto-generate="autoGenerate"
         class="card w-full lg:w-[calc(50%-15px)] xl:w-[calc(33%-15px)] bg-base-100 shadow-xl"
         :key="id"
       ></ImgBlock>
