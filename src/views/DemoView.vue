@@ -2,20 +2,14 @@
 import { useHead } from "@unhead/vue";
 import { computed, ref } from "vue";
 import ImgBlock from "../components/ImgBlock.vue";
+import type { ColorClassification } from "extract-colors/lib/types/Color";
+import SelectTags from "@/components/SelectTags.vue";
 // import "./parts/track"
 
 const enum EXTRACTOR_DEFAULT {
   PIXELS = 64000,
   DISTANCE = 0.22,
-}
-
-/**
- * Default average values
- */
-const enum AVERAGE_DEFAULT {
-  HUE = 1 / 12,
-  SATURATION = 1 / 5,
-  LIGHTNESS = 1 / 5,
+  FAST_DISTANCE = 0.11,
 }
 
 useHead({
@@ -35,11 +29,12 @@ const getRandImgs = (count: number) => Array(count).fill(1).map(getRandImg);
 
 const pixels = ref(EXTRACTOR_DEFAULT.PIXELS);
 const distance = ref(EXTRACTOR_DEFAULT.DISTANCE);
-const hueDistance = ref(Math.round(AVERAGE_DEFAULT.HUE * 1000) / 1000);
-const saturationDistance = ref(AVERAGE_DEFAULT.SATURATION);
-const lightnessDistance = ref(AVERAGE_DEFAULT.LIGHTNESS);
+const fastDistance = ref(
+  Math.round(EXTRACTOR_DEFAULT.FAST_DISTANCE * 1000) / 1000
+);
 const srcs = ref(getRandImgs(5));
 const random = ref(true);
+const types = ref<ColorClassification[]>(["dominants", "accents"]);
 
 const list = computed(() =>
   srcs.value.map((src) => ({
@@ -48,9 +43,8 @@ const list = computed(() =>
       src +
       pixels.value +
       distance.value +
-      hueDistance.value +
-      saturationDistance.value +
-      lightnessDistance.value,
+      fastDistance.value +
+      types.value.join(","),
   }))
 );
 
@@ -111,7 +105,7 @@ function uploadFile(event: Event) {
             data-tip="From 0 to 1 is the color distance to not have near colors (1 distance is between white and black)"
           >
             <label class="label">
-              <span class="label-text opacity-60">Color distance</span>
+              <span class="label-text opacity-60">Distance</span>
             </label>
           </div>
           <div class="flex items-center">
@@ -134,11 +128,11 @@ function uploadFile(event: Event) {
           </div>
         </div>
 
-        <!-- Hue distance -->
+        <!-- Fast distance -->
         <div class="form-control mt-2">
           <div class="tooltip" data-tip="from 0 to 1">
             <label class="label">
-              <span class="label-text opacity-60">Hue distance</span>
+              <span class="label-text opacity-60">Fast distance</span>
             </label>
           </div>
           <div class="flex items-center">
@@ -147,7 +141,7 @@ function uploadFile(event: Event) {
               step="0.05"
               min="0"
               max="1"
-              v-model="hueDistance"
+              v-model="fastDistance"
               class="range range-xs w-full"
             />
             <input
@@ -155,65 +149,49 @@ function uploadFile(event: Event) {
               step="0.05"
               min="0"
               max="1"
-              v-model="hueDistance"
+              v-model="fastDistance"
               class="number number-xs w-16 text-right"
             />
           </div>
         </div>
 
-        <!-- Saturation distance -->
-        <div class="form-control mt-2">
-          <div class="tooltip" data-tip="from 0 to 1">
-            <label class="label">
-              <span class="label-text opacity-60">Saturation distance</span>
-            </label>
-          </div>
-          <div class="flex items-center">
-            <input
-              type="range"
-              step="0.05"
-              min="0"
-              max="1"
-              v-model="saturationDistance"
-              class="range range-xs w-full"
-            />
-            <input
-              type="number"
-              step="0.05"
-              min="0"
-              max="1"
-              v-model="saturationDistance"
-              class="number number-xs w-16 text-right"
-            />
-          </div>
-        </div>
+        <SelectTags v-model="types" />
 
-        <!-- Lightness distance -->
-        <div class="form-control mt-2">
-          <div class="tooltip" data-tip="from 0 to 1">
-            <label class="label">
-              <span class="label-text opacity-60">Lightness distance</span>
-            </label>
-          </div>
-          <div class="flex items-center">
-            <input
-              type="range"
-              step="0.05"
-              min="0"
-              max="1"
-              v-model="lightnessDistance"
-              class="range range-xs w-full"
-            />
-            <input
-              type="number"
-              step="0.05"
-              min="0"
-              max="1"
-              v-model="lightnessDistance"
-              class="number number-xs w-16 text-right"
-            />
-          </div>
-        </div>
+        <!-- 
+        <multiselect
+          v-model="types"
+          :options="[
+            'dominants',
+            'accents',
+            'dominantsLight',
+            'dominantsMidtone',
+            'dominantsDark',
+            'accentsLight',
+            'accentsMidtone',
+            'accentsDark',
+            'dullests',
+            'vivids',
+            'dullestsLight',
+            'dullestsMidtone',
+            'dullestsDark',
+            'vividsLight',
+            'vividsMidtone',
+            'vividsDark',
+            'lightests',
+            'midtones',
+            'darkests',
+            'warmest',
+            'coolest',
+            'warmestLight',
+            'warmestMidtone',
+            'warmestDark',
+            'coolestLight',
+            'coolestMidtone',
+            'coolestDark',
+          ]"
+          :multiple="true"
+          :taggable="true"
+        ></multiselect> -->
 
         <div class="divider text-sm mt-8">Images</div>
 
@@ -244,9 +222,8 @@ function uploadFile(event: Event) {
         :src="src"
         :pixels="pixels"
         :distance="distance"
-        :hueDistance="hueDistance"
-        :saturationDistance="saturationDistance"
-        :lightnessDistance="lightnessDistance"
+        :fastDistance="fastDistance"
+        :classifiedColors="types"
         class="card w-full lg:w-[calc(50%-15px)] xl:w-[calc(33%-15px)] bg-base-100 shadow-xl"
         :key="id"
       ></ImgBlock>

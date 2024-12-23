@@ -1,20 +1,24 @@
 <script setup lang="ts">
 import { extractColors } from "extract-colors";
-import type { FinalColor } from "../types";
 import { onMounted, ref } from "vue";
 import { process } from "../helpers/process";
+import type {
+  ColorClassification,
+  DetailledColor,
+} from "extract-colors/lib/types/Color";
+import ColorRound from "./ColorRound.vue";
 
 const props = defineProps<{
   random: boolean;
   src: string;
   pixels: number;
   distance: number;
-  hueDistance: number;
-  saturationDistance: number;
-  lightnessDistance: number;
+  fastDistance: number;
+  classifiedColors: ColorClassification[];
 }>();
 
-const colors = ref<FinalColor[]>([]);
+const colors = ref<DetailledColor[]>([]);
+const classified = ref<{ [key: string]: DetailledColor[] }>({});
 const px = ref(0);
 const time = ref(0);
 const naturalPx = ref(0);
@@ -25,7 +29,7 @@ const processCurrentId = ref("");
 
 onMounted(() => {
   const image = new Image();
-  const id = `${props.pixels}${props.distance}${props.hueDistance}${props.saturationDistance}${props.lightnessDistance}`;
+  const id = `${props.pixels}${props.distance}${props.fastDistance}${props.classifiedColors.join(",")}`;
 
   processCurrentId.value = id;
 
@@ -56,14 +60,18 @@ onMounted(() => {
       extractColors(image, {
         pixels: Number(props.pixels),
         distance: Number(props.distance),
-        hueDistance: Number(props.hueDistance),
-        saturationDistance: Number(props.saturationDistance),
-        lightnessDistance: Number(props.lightnessDistance),
+        fastDistance: Number(props.fastDistance),
+        colorClassifications: props.classifiedColors,
         crossOrigin: "anonymous",
       })
-        .then((list) => {
+        .then((data) => {
           time.value = Date.now() - initTime;
+          console.log(data);
+
+          const { list, ...other } = data;
+
           colors.value = list;
+          classified.value = other;
           loading.value = false;
         })
         .finally(nextProcess);
@@ -131,21 +139,36 @@ onMounted(() => {
         {{ px }} pixels for calculation (original image is
         {{ naturalPx }} pixels)<br />
       </p>
-      <div class="card-actions justify-start">
+
+      <div>
+        <strong class="mt-3 mb-1 block">Full list</strong>
         <ul class="flex justify-left flex-wrap gap-2">
-          <li v-for="(color, index) of colors" class="leading-[0]" :key="index">
-            <span
-              class="tooltip"
-              :data-tip="`${parseFloat((color.area * 100).toFixed(2))}%  ${color.hex}`"
-            >
-              <span
-                class="w-6 h-6 rounded-xl block border border-black border-opacity-20"
-                :style="`background-color: ${color.hex}`"
-              ></span>
-            </span>
-          </li>
+          <ColorRound
+            v-for="(color, index) of colors"
+            :color="color"
+            :key="index"
+          />
         </ul>
       </div>
+
+      <details class="mt-4 bg-base-200 rounded-lg">
+        <summary class="btn btn-sm w-full">Color classification</summary>
+
+        <div class="px-4 pb-4">
+          <template v-for="key of Object.keys(classified)" :key="key">
+            <div v-if="classified[key].length">
+              <strong class="mt-3 mb-1 block">{{ key }}</strong>
+              <ul class="flex justify-left flex-wrap gap-2">
+                <ColorRound
+                  v-for="(color, index) of classified[key]"
+                  :color="color"
+                  :key="index"
+                />
+              </ul>
+            </div>
+          </template>
+        </div>
+      </details>
     </div>
   </div>
 </template>
