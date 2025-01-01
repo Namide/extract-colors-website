@@ -6,7 +6,7 @@ import type {
   ColorClassification,
   DetailledColor,
 } from "extract-colors/lib/types/Color";
-import ColorRound from "./ColorRound.vue";
+import ColorsDisplay from "./ColorsDisplay.vue";
 
 const props = defineProps<{
   random: boolean;
@@ -16,6 +16,7 @@ const props = defineProps<{
   fastDistance: number;
   autoGenerate: boolean;
   classifiedColors: ColorClassification[];
+  defaultMainColor: number;
 }>();
 
 const colors = ref<DetailledColor[]>([]);
@@ -26,11 +27,13 @@ const naturalPx = ref(0);
 const loading = ref(true);
 const random = ref(true);
 
+const isDisplayingInfo = ref(false);
+
 const processCurrentId = ref("");
 
 onMounted(() => {
   const image = new Image();
-  const id = `${props.pixels}${props.distance}${props.fastDistance}${props.classifiedColors.join(",")}${props.autoGenerate}`;
+  const id = `${props.pixels}${props.distance}${props.fastDistance}${props.classifiedColors.join(",")}${props.autoGenerate}${props.defaultMainColor}`;
 
   processCurrentId.value = id;
 
@@ -65,6 +68,7 @@ onMounted(() => {
         colorClassifications: props.classifiedColors,
         crossOrigin: "anonymous",
         defaultColors: props.autoGenerate,
+        defaultMainColor: props.defaultMainColor,
       })
         .then((data) => {
           time.value = Date.now() - initTime;
@@ -96,7 +100,7 @@ onMounted(() => {
   <div
     class="bg-base-100 card lg:w-[calc(50%-15px)] shadow-xl w-full xl:w-[calc(33%-15px)]"
   >
-    <div class="relative rounded-xl mb-2 overflow-hidden">
+    <div class="relative rounded-xl overflow-hidden">
       <figure>
         <img
           crossorigin="anonymous"
@@ -113,18 +117,42 @@ onMounted(() => {
       >
         <span class="text-white text-2xl font-bold">Loading image</span>
       </div>
+
+      <div v-if="!loading" class="form-control absolute top-0 right-0">
+        <label class="label cursor-pointer">
+          <span class="label-text mr-2">informations</span>
+          <input
+            type="checkbox"
+            class="toggle toggle-sm"
+            v-model="isDisplayingInfo"
+          />
+        </label>
+      </div>
     </div>
 
     <div v-if="loading" class="card-body text-base-content">
       <span class="card-title"> Loading </span>
     </div>
     <div v-else class="card-body text-base-content relative">
-      <p
-        v-if="random"
-        class="absolute -top-3 left-2 text-shadow text-white text-sm -translate-y-full"
-      >
-        Random image from Unsplash
-      </p>
+      <div class="absolute top-0 left-0 right-3 -translate-y-full">
+        <p
+          v-if="random"
+          class="text-shadow text-white text-sm mb-1 italic opacity-80"
+        >
+          Random image from Unsplash
+        </p>
+
+        <ColorsDisplay name="Full list" :colors="colors" />
+
+        <template v-for="key of Object.keys(classified)" :key="key">
+          <ColorsDisplay
+            v-if="classified[key].length"
+            :name="key"
+            :colors="classified[key]"
+            class="inline-block"
+          />
+        </template>
+      </div>
       <h2 class="card-title">
         {{ colors.length }} colors
         <span
@@ -136,20 +164,10 @@ onMounted(() => {
           </div>
         </span>
       </h2>
-      <p>
-        {{ px }} pixels for calculation (original image is
-        {{ naturalPx }} pixels)<br />
-      </p>
 
       <div>
-        <strong class="mt-3 mb-1 block">Full list</strong>
-        <ul class="flex justify-left flex-wrap gap-2">
-          <ColorRound
-            v-for="(color, index) of colors"
-            :color="color"
-            :key="index"
-          />
-        </ul>
+        <strong class="mt-3 mb-1 block">Full color palette</strong>
+        <ColorsDisplay name="Full color" :colors="colors" />
       </div>
 
       <details
@@ -161,18 +179,17 @@ onMounted(() => {
         <div class="px-4 pb-4">
           <template v-for="key of Object.keys(classified)" :key="key">
             <div v-if="classified[key].length">
-              <strong class="mt-3 mb-1 block">{{ key }}</strong>
-              <ul class="flex justify-left flex-wrap gap-2">
-                <ColorRound
-                  v-for="(color, index) of classified[key]"
-                  :color="color"
-                  :key="index"
-                />
-              </ul>
+              <!-- <strong class="mt-3 mb-1 block">{{ key }}</strong> -->
+              <ColorsDisplay :name="key" :colors="classified[key]" />
             </div>
           </template>
         </div>
       </details>
+
+      <p class="text-xs opacity-50 italic mt-2">
+        {{ px }} pixels for calculation (original image is
+        {{ naturalPx }} pixels)<br />
+      </p>
     </div>
   </div>
 </template>

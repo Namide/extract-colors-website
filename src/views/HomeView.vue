@@ -7,7 +7,7 @@ import installBrowserJsCode from "./code/install-browser.js.txt";
 import installNodeBashCode from "./code/install-node.bash.txt";
 import installNodeJsCode from "./code/install-node.js.txt";
 import { onMounted, ref } from "vue";
-import ColorRound from "@/components/ColorRound.vue";
+import ColorsDisplay from "@/components/ColorsDisplay.vue";
 import type { DetailledColor } from "extract-colors/lib/types/Color";
 
 useHead({
@@ -119,7 +119,7 @@ onMounted(() => {
         <div>
           <div class="relative">
             <div class="relative">
-              <div class="relative rounded-xl mb-2 overflow-hidden">
+              <div class="relative rounded-xl overflow-hidden">
                 <img ref="imgEl" width="640" height="480" alt="Image example" />
                 <div
                   class="absolute flex justify-center items-center top-0 left-0 w-full h-full transition-opacity bg-primary"
@@ -173,16 +173,11 @@ onMounted(() => {
               </button>
             </div>
 
-            <ul
-              class="flex justify-left flex-wrap gap-2 min-h-6"
+            <ColorsDisplay
+              :colors="colors"
+              class="min-h-6"
               :class="{ invisible: isLoading }"
-            >
-              <ColorRound
-                v-for="(color, index) of colors"
-                :color="color"
-                :key="index"
-              />
-            </ul>
+            />
           </div>
         </div>
 

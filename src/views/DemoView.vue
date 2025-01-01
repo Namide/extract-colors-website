@@ -30,6 +30,7 @@ const getRandImgs = (count: number) => Array(count).fill(1).map(getRandImg);
 const pixels = ref(EXTRACTOR_DEFAULT.PIXELS);
 const distance = ref(EXTRACTOR_DEFAULT.DISTANCE);
 const autoGenerate = ref(false);
+const defaultMainColor = ref("#0077ff");
 const fastDistance = ref(
   Math.round(EXTRACTOR_DEFAULT.FAST_DISTANCE * 1000) / 1000
 );
@@ -46,7 +47,8 @@ const list = computed(() =>
       distance.value +
       fastDistance.value +
       types.value.join(",") +
-      autoGenerate.value,
+      autoGenerate.value +
+      defaultMainColor.value,
   }))
 );
 
@@ -167,7 +169,7 @@ function uploadFile(event: Event) {
         <div class="form-control mt-2">
           <div
             class="tooltip"
-            data-tip="generate colors for color classifications without extracted colors"
+            data-tip="generate colors for color classifications without extracted colors. The generation will be based on the default main color"
           >
             <label class="label mt-2 pb-0">
               <span class="label-text opacity-60">Default colors</span>
@@ -183,6 +185,20 @@ function uploadFile(event: Event) {
               />
             </label>
           </div>
+          <!-- <div
+            class="flex items-center"
+            :class="{ 'opacity-50': !autoGenerate }"
+          >
+            <label class="label cursor-pointer">
+              <span class="label-text mr-5">Default main color</span>
+              <input
+                type="color"
+                class="w-5 h-5"
+                v-model="defaultMainColor"
+                :disabled="!autoGenerate"
+              />
+            </label>
+          </div> -->
         </div>
 
         <div class="divider text-sm mt-8">Images</div>
@@ -217,7 +233,8 @@ function uploadFile(event: Event) {
         :fast-distance="fastDistance"
         :classified-colors="types"
         :auto-generate="autoGenerate"
-        class="card w-full lg:w-[calc(50%-15px)] xl:w-[calc(33%-15px)] bg-base-100 shadow-xl"
+        :default-main-color="Number(defaultMainColor.replace('#', '0x'))"
+        class="card w-full lg:w-full xl:w-[calc(50%-15px)] bg-base-100 shadow-xl"
         :key="id"
       ></ImgBlock>
     </div>

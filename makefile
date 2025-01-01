@@ -1,7 +1,7 @@
 install:
-	git submodule update --init
-	git -C ./extract-colors checkout master
-	git -C ./extract-colors pull
+# git submodule update --init
+# git -C ./extract-colors checkout master
+# git -C ./extract-colors pull
 	cd extract-colors && $(MAKE) install
 	docker run -ti --rm \
 		-u "node" \
