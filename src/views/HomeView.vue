@@ -6,9 +6,12 @@ import installBrowserBashCode from "./code/install-browser.bash.txt";
 import installBrowserJsCode from "./code/install-browser.js.txt";
 import installNodeBashCode from "./code/install-node.bash.txt";
 import installNodeJsCode from "./code/install-node.js.txt";
-import { onMounted, ref } from "vue";
-import ColorsDisplay from "@/components/ColorsDisplay.vue";
-import type { DetailledColor } from "extract-colors/lib/types/Color";
+import { ref } from "vue";
+import {
+  type ColorClassification,
+  type DetailledColor,
+} from "extract-colors/lib/types/Color";
+import ImgBlock from "@/components/ImgBlock.vue";
 
 useHead({
   title: "Extract colors",
@@ -20,39 +23,83 @@ useHead({
   ],
 });
 
-const imgEl = ref<HTMLImageElement>();
 const isLoading = ref(true);
 const colors = ref<DetailledColor[]>([]);
+const types: ColorClassification[] = [
+  "dominants",
+  "accents",
+  "dominantsLight",
+  "dominantsMidtone",
+  "dominantsDark",
+  "accentsLight",
+  "accentsMidtone",
+  "accentsDark",
+  "dullests",
+  "vivids",
+  "dullestsLight",
+  "dullestsMidtone",
+  "dullestsDark",
+  "vividsLight",
+  "vividsMidtone",
+  "vividsDark",
+  "lightests",
+  "midtones",
+  "darkests",
+  "warmest",
+  "coolest",
+  "warmestLight",
+  "warmestMidtone",
+  "warmestDark",
+  "coolestLight",
+  "coolestMidtone",
+  "coolestDark",
+];
 
 const process: (() => void)[] = [];
+const src = ref(
+  `https://picsum.photos/seed/${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}/640/480`
+);
 
 async function updateImg() {
-  // const container = document.body.querySelector("#ec-colors");
-  // const restartEl = document.body.querySelector("#ec-restart");
-  // const reloadEl = restartEl?.children[0] as SVGElement | undefined;
+  isLoading.value = true;
+  src.value = `https://picsum.photos/seed/${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}/640/480`;
+  // // const container = document.body.querySelector("#ec-colors");
+  // // const restartEl = document.body.querySelector("#ec-restart");
+  // // const reloadEl = restartEl?.children[0] as SVGElement | undefined;
 
-  // if (!imgEl || !container || !restartEl || !reloadEl || !noimgEl) {
+  // // if (!imgEl || !container || !restartEl || !reloadEl || !noimgEl) {
+  // //   return;
+  // // }
+
+  // if (!imgEl.value) {
   //   return;
   // }
 
-  if (!imgEl.value) {
-    return;
-  }
+  // // container.classList.add("invisible");
+  // // restartEl.classList.add("loading");
+  // // restartEl.removeEventListener("click", updateImg);
+  // // reloadEl.style.display = "none";
+  // // noimgEl.style.opacity = "1";
 
-  // container.classList.add("invisible");
-  // restartEl.classList.add("loading");
-  // restartEl.removeEventListener("click", updateImg);
-  // reloadEl.style.display = "none";
-  // noimgEl.style.opacity = "1";
+  // colors.value = [];
+  // isLoading.value = true;
 
-  colors.value = [];
-  isLoading.value = true;
+  // const src = `https://picsum.photos/seed/${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}/640/480`;
 
-  const src = `https://picsum.photos/seed/${Math.round(Math.random() * Number.MAX_SAFE_INTEGER)}/640/480`;
+  // imgEl.value.src = src;
+  // imgEl.value.crossOrigin = "anonymous";
 
-  imgEl.value.src = src;
-  imgEl.value.crossOrigin = "anonymous";
+  // const nextProcess = () => {
+  //   process.shift();
+  //   if (process.length > 0) {
+  //     process[0]();
+  //   }
+  // };
+}
 
+updateImg();
+
+async function onLoaded(event: Event) {
   const nextProcess = () => {
     process.shift();
     if (process.length > 0) {
@@ -60,40 +107,14 @@ async function updateImg() {
     }
   };
 
-  const data = await extractColors(src, {
+  const data = await extractColors((event.target as HTMLImageElement).src, {
     crossOrigin: "anonymous",
   });
   colors.value = data.list;
   isLoading.value = false;
 
-  // container.append(
-  //   ...colors.map((color) => {
-  //     const colEl = el.cloneNode(true) as HTMLLIElement;
-  //     const tooltip = colEl.querySelector(".tooltip") as HTMLSpanElement;
-  //     const span = colEl.querySelector("span>span") as HTMLSpanElement;
-
-  //     if (tooltip) {
-  //       tooltip.dataset.tip = `${(color.area * 100).toFixed(2)}% - ${color.hex}`;
-  //     }
-  //     if (span) {
-  //       span.style.backgroundColor = color.hex;
-  //     }
-
-  //     return colEl;
-  //   })
-  // );
-
-  // restartEl.classList.remove("loading");
-  // restartEl.addEventListener("click", updateImg);
-  // reloadEl.style.display = "";
-  // noimgEl.style.opacity = "0";
-
   await nextProcess();
 }
-
-onMounted(() => {
-  updateImg();
-});
 </script>
 
 <template>
@@ -102,11 +123,11 @@ onMounted(() => {
     class="hero bg-base-200 from-primary to-accent text-primary-content bg-gradient-to-br"
   >
     <div class="hero-content text-center">
-      <div class="max-w-md my-20">
+      <div class="max-w-lg my-20">
         <h1 class="mb-2 text-4xl font-extrabold md:text-6xl">Extract colors</h1>
         <p></p>
         <p class="py-6 leading-7">
-          Javascript library to extract color palette from images
+          Javascript library to extract color palette from images<br />
           <span class="badge badge-ghost">simple</span>,
           <span class="badge badge-ghost">fast</span> and
           <span class="badge badge-ghost">lightweight</span><br />
@@ -118,7 +139,57 @@ onMounted(() => {
 
         <div>
           <div class="relative">
-            <div class="relative">
+            <ImgBlock
+              :src="src"
+              :pixels="undefined"
+              :distance="undefined"
+              :fast-distance="undefined"
+              :classified-colors="types"
+              :auto-generate="false"
+              :default-main-color="0x000000"
+              :display-infos="false"
+              :key="src"
+              class="w-full aspect-[640/480]"
+              @load="onLoaded"
+            ></ImgBlock>
+
+            <button
+              @click="updateImg()"
+              class="hover:rotate-[360deg] absolute top-4 right-4 btn btn-accent btn-circle"
+              aria-label="Load a new image"
+            >
+              <span
+                class="w-[17px] h-[17px]"
+                :class="{ loading: isLoading }"
+              ></span>
+              <svg
+                v-if="!isLoading"
+                class="top-1/2 absolute left-1/2 -translate-x-1/2 -translate-y-1/2"
+                width="16"
+                height="16"
+                viewBox="0 0 303.597 303.597"
+                xmlns="http://www.w3.org/2000/svg"
+                xml:space="preserve"
+              >
+                <path
+                  fill="black"
+                  d="M57.866,268.881c25.982,19.891,56.887,30.403,89.369,30.402h0.002c6.545,0,13.176-0.44,19.707-1.308
+                      c39.055-5.187,73.754-25.272,97.702-56.557c14.571-19.033,24.367-41.513,28.329-65.01c0.689-4.084-2.064-7.954-6.148-8.643
+                      l-19.721-3.326c-1.964-0.33-3.974,0.131-5.595,1.284c-1.621,1.153-2.717,2.902-3.048,4.864
+                      c-3.019,17.896-10.49,35.032-21.608,49.555c-18.266,23.861-44.73,39.181-74.521,43.137c-4.994,0.664-10.061,1-15.058,1
+                      c-24.757,0-48.317-8.019-68.137-23.191c-23.86-18.266-39.18-44.73-43.136-74.519c-3.957-29.787,3.924-59.333,22.189-83.194
+                      c21.441-28.007,54.051-44.069,89.469-44.069c24.886,0,48.484,7.996,68.245,23.122c6.55,5.014,12.43,10.615,17.626,16.754
+                      l-36.934-6.52c-1.956-0.347-3.973,0.101-5.604,1.241c-1.631,1.141-2.739,2.882-3.085,4.841l-3.477,19.695
+                      c-0.72,4.079,2.003,7.969,6.081,8.689l88.63,15.647c0.434,0.077,0.869,0.114,1.304,0.114c1.528,0,3.031-0.467,4.301-1.355
+                      c1.63-1.141,2.739-2.882,3.084-4.841l15.646-88.63c0.721-4.079-2.002-7.969-6.081-8.69l-19.695-3.477
+                      c-4.085-0.723-7.97,2.003-8.689,6.082l-6.585,37.3c-7.387-9.162-15.87-17.463-25.248-24.642
+                      c-25.914-19.838-56.86-30.324-89.495-30.324c-46.423,0-89.171,21.063-117.284,57.787C6.454,93.385-3.878,132.123,1.309,171.178
+                      C6.497,210.236,26.583,244.933,57.866,268.881z"
+                />
+              </svg>
+            </button>
+
+            <!-- <div class="relative">
               <div class="relative rounded-xl overflow-hidden">
                 <img ref="imgEl" width="640" height="480" alt="Image example" />
                 <div
@@ -177,7 +248,7 @@ onMounted(() => {
               :colors="colors"
               class="min-h-6"
               :class="{ invisible: isLoading }"
-            />
+            /> -->
           </div>
         </div>
 

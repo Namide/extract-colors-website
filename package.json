@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@unhead/vue": "^1.10.0",
+    "@vueuse/core": "^12.3.0",
     "tailwind-highlightjs": "^2.0.1",
     "vue": "^3.4.29",
     "vue-router": "^4.3.3"

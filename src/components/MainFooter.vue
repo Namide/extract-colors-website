@@ -10,7 +10,7 @@
           class="link"
           >GNU General Public v3 License</a
         >.<br />
-        Copyright © 2019-2024
+        Copyright © 2019-2025
         <a
           href="https://damien-doussaud.com/"
           target="_blank"

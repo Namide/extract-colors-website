@@ -223,7 +223,7 @@ function uploadFile(event: Event) {
     </div>
 
     <!-- IMAGES -->
-    <div class="flex flex-wrap gap-5">
+    <div class="flex flex-wrap gap-5 w-full">
       <ImgBlock
         v-for="{ src, id } of list"
         :random="random"
@@ -234,8 +234,9 @@ function uploadFile(event: Event) {
         :classified-colors="types"
         :auto-generate="autoGenerate"
         :default-main-color="Number(defaultMainColor.replace('#', '0x'))"
-        class="card w-full lg:w-full xl:w-[calc(50%-15px)] bg-base-100 shadow-xl"
+        :display-infos="true"
         :key="id"
+        class="w-full lg:w-full xl:w-[calc(50%-15px)] aspect-[640/480]"
       ></ImgBlock>
     </div>
   </div>

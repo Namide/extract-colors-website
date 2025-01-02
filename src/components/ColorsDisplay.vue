@@ -1,19 +1,24 @@
 <script setup lang="ts">
 import type { DetailledColor } from "extract-colors/lib/types/Color";
 
-defineProps<{
-  name: string;
-  colors: DetailledColor[];
-}>();
+withDefaults(
+  defineProps<{
+    name: string;
+    colors: DetailledColor[];
+    size?: "xs" | "sm" | "md";
+  }>(),
+  {
+    size: "md",
+  }
+);
 </script>
 
 <template>
-  <div
-    class="mb-3 ml-3 leading-[0] bg-white bg-opacity-40 backdrop-blur-sm rounded-md p-2 w-fit inline-block"
-  >
-    <strong class="block text-sm mb-1 italic first-letter:uppercase">{{
-      name
-    }}</strong>
+  <div class="leading-[0] w-fit flex flex-col items-center">
+    <strong
+      class="block text-sm mb-1 italic font-normal first-letter:uppercase"
+      >{{ name }}</strong
+    >
     <ul
       class="flex justify-left w-fit"
       :class="{
@@ -26,9 +31,14 @@ defineProps<{
           :data-tip="`${color.area > 0 ? `${parseFloat((color.area * 100).toFixed(3))}%` : 'generated'}  ${color.hexString}`"
         >
           <span
-            class="h-6 w-6 block"
+            class="w-6 block aspect-square"
             :style="{
               backgroundColor: color.hexString,
+            }"
+            :class="{
+              'w-2': size === 'xs',
+              'w-4': size === 'sm',
+              'w-6': size === 'md',
             }"
           ></span>
         </span>

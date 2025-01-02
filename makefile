@@ -14,7 +14,7 @@ install:
 dev:
 	cd extract-colors && $(MAKE) build
 	cp -r extract-colors node_modules
-	python3 -m webbrowser http://localhost:3000/
+	(sleep 4 && python3 -m webbrowser http://localhost:3000) &
 	docker run -ti --rm \
 		-u "node" \
 		-v $(shell pwd):/usr/src/app/extract-colors \
