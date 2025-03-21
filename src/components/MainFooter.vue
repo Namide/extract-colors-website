@@ -4,13 +4,13 @@
       <div class="text-center">
         Released under the
         <a
-          href="https://www.gnu.org/licenses/"
+          href="https://opensource.org/license/MIT"
           target="_blank"
           rel="noopener noreferrer"
           class="link"
-          >GNU General Public v3 License</a
+          >MIT License</a
         >.<br />
-        Copyright © 2019-2024
+        Copyright © 2019-2025
         <a
           href="https://damien-doussaud.com/"
           target="_blank"
