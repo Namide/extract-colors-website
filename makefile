@@ -11,14 +11,14 @@ install:
 		node:20-slim \
 		npm install
 
+# http://localhost:3000
 dev:
 	cd extract-colors && $(MAKE) build
 	cp -r extract-colors node_modules
-	(sleep 4 && python3 -m webbrowser http://localhost:3000) &
 	docker run -ti --rm \
 		-u "node" \
-		-v $(shell pwd):/usr/src/app/extract-colors \
-		-w /usr/src/app/extract-colors \
+		-v $(shell pwd):$(shell pwd) \
+		-w $(shell pwd) \
 		-p 3000\:5173 \
 		-e NPM_CONFIG_PREFIX=/home/node/.npm-global \
 		node:20-slim \
