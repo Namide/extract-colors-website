@@ -236,7 +236,7 @@ function uploadFile(event: Event) {
         :default-main-color="Number(defaultMainColor.replace('#', '0x'))"
         :display-infos="true"
         :key="id"
-        class="w-full lg:w-full xl:w-[calc(50%-15px)] aspect-[640/480]"
+        class="w-[640px] max-w-full xl:w-[calc(50%-15px)] "
       ></ImgBlock>
     </div>
   </div>

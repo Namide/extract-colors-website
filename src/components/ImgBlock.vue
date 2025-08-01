@@ -166,8 +166,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="relative shadow-xl rounded-xl">
-    <div class="relative">
+  <div class="relative shadow-xl rounded-xl aspect-[640/480]">
+    <div class="absolute top-0 left-0 w-full h-full">
       <!-- Image -->
       <figure>
         <img
