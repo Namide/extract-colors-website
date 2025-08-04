@@ -11,6 +11,7 @@ import moduleNodeCode from "../code/module-node.js.txt";
 import workerCode from "../code/worker.js.txt";
 import optionsBrowserCode from "../code/options-browser.js.txt";
 import optionsNodeCode from "../code/options-node.js.txt";
+import exampleDefaultColorsCode from "../code/example-default-colors.js.txt";
 
 useHead({
   title: "Extract colors | Guide",
@@ -31,18 +32,10 @@ useHead({
   <div class="alert alert-info shadow-lg mt-5">
     <div>
       <p>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="stroke-current flex-shrink-0 w-6 h-6 inline-block"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+          class="stroke-current flex-shrink-0 w-6 h-6 inline-block">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
         </svg>
         The NodeJs example use <code>get-pixels</code> but you can change the
         lib.<br />
@@ -65,18 +58,10 @@ useHead({
 
   <div class="alert alert-info shadow-lg mt-5">
     <div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        class="stroke-current flex-shrink-0 w-6 h-6"
-      >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-        ></path>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+        class="stroke-current flex-shrink-0 w-6 h-6">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
       </svg>
       <p>
         With browser you can use different types for src param (String for a
@@ -154,10 +139,8 @@ useHead({
         <tr>
           <th class="block">Signature</th>
           <td>
-            <code
-              >(red: number, green: number, blue: number, alpha?: number) =>
-              boolean</code
-            >
+            <code>(red: number, green: number, blue: number, alpha?: number) =>
+              boolean</code>
           </td>
         </tr>
         <tr>
@@ -217,84 +200,79 @@ useHead({
     </table>
   </div>
 
-  <h3 id="saturation-distance" class="text-xl mt-6 mb-2 font-bold">
-    saturationDistance
-  </h3>
+  <h3 id="color-classifications" class="text-xl mt-6 mb-2 font-bold">colorClassifications</h3>
   <p class="my-5">
-    Minimum saturation value between two colors otherwise the colors will be
-    merged.
+    List of colors type returned.
   </p>
   <div class="overflow-x-auto">
     <table class="table w-auto">
       <thead>
         <tr>
           <th>Type</th>
-          <th>Min</th>
-          <th>Max</th>
           <th>Default</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>String</td>
-          <th>0</th>
-          <th>1</th>
-          <td>0.2</td>
+          <td>colorClassificationType[]</td>
+          <td>[ "dominants", "accents", "dominantsLight", "dominantsMidtone", "dominantsDark", "accentsLight",
+            "accentsMidtone", "accentsDark", "dullests", "vivids", "dullestsLight", "dullestsMidtone", "dullestsDark",
+            "vividsLight", "vividsMidtone", "vividsDark", "lightests", "midtones", "darkests", "warmest", "coolest",
+            "warmestLight", "warmestMidtone", "warmestDark", "coolestLight", "coolestMidtone", "coolestDark" ]</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <h3 id="lightness-distance" class="text-xl mt-6 mb-2 font-bold">
-    lightnessDistance
-  </h3>
+  <p class="my-5">All color classification types are:</p>
+  <ul>
+    <li><strong>accents</strong> (dark + light) (contrasting colors) [opposite of dominants]</li>
+    <li><strong>accentsLight</strong> (contrasting light colors)</li>
+    <li><strong>accentsDark</strong> (contrasting dark colors)</li>
+    <li><strong>dominants</strong> (dark + light) (largest proportional area colors) [opposite of accents]</li>
+    <li><strong>dominantsLight</strong> (largest proportional area light colors)</li>
+    <li><strong>dominantsDark</strong> (largest proportional area dark colors)</li>
+    <li><strong>vivids</strong> (dark + light) (most saturated color colors) [opposite of dullests]</li>
+    <li><strong>vividsLight</strong> (most saturated color light colors)</li>
+    <li><strong>vividsDark</strong> (most saturated color dark colors)</li>
+    <li><strong>dullests</strong> (dark + light) (least saturated color colors) [opposite of vivids]</li>
+    <li><strong>dullestsLight</strong> (least saturated color light colors)</li>
+    <li><strong>dullestsDark</strong> (least saturated color dark colors)</li>
+    <li><strong>lightests</strong> (most lightest color colors) [opposite of darkests]</li>
+    <li><strong>darkests</strong> (most darkest color colors) [opposite of lightests]</li>
+    <li><strong>coolest</strong> (dark + light) (most cool colors) [opposite of warmest]</li>
+    <li><strong>coolestLight</strong> (most cool light colors)</li>
+    <li><strong>coolestDark</strong> (most cool dark colors)</li>
+    <li><strong>warmest</strong> (dark + light) (most warm colors) [opposite of coolest]</li>
+    <li><strong>warmestLight</strong> (most warm light colors)</li>
+    <li><strong>warmestDark</strong> (most warm dark colors)</li>
+  </ul>
+
+
+  <h3 id="default-colors" class="text-xl mt-6 mb-2 font-bold">defaultColors</h3>
   <p class="my-5">
-    Minimum lightness value between two colors otherwise the colors will be
-    merged.
+    Default value if color not found for the colorClassifications.
   </p>
   <div class="overflow-x-auto">
     <table class="table w-auto">
       <thead>
         <tr>
           <th>Type</th>
-          <th>Min</th>
-          <th>Max</th>
           <th>Default</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>String</td>
-          <th>0</th>
-          <th>1</th>
-          <td>0.2</td>
+          <td>boolean | { [colorClassificationType]: Number | boolean | (classifiedColorsPart) => Number[] }</td>
+          <td>false</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <h3 id="hue-distance" class="text-xl mt-6 mb-2 font-bold">hueDistance</h3>
   <p class="my-5">
-    Minimum hue value between two colors otherwise the colors will be merged.
+    Examples:
   </p>
-  <div class="overflow-x-auto">
-    <table class="table w-auto">
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Min</th>
-          <th>Max</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>String</td>
-          <th>0</th>
-          <th>1</th>
-          <td>0.083333333</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <CodeTabs  :node="exampleDefaultColorsCode"></CodeTabs>
+
 </template>

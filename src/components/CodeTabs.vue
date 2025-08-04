@@ -6,7 +6,7 @@ const props = defineProps<{
   node?: string;
 }>();
 
-const type = ref<"browser" | "node">("browser");
+const type = ref<"browser" | "node">(props.browser ? "browser" : "node");
 
 const count = computed(() => (props.browser ? 1 : 0) + (props.node ? 1 : 0));
 </script>

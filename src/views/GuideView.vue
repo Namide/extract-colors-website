@@ -92,7 +92,7 @@ useHead({
               :to="{ name: 'advanced' }"
               class="ml-2 text-xs leading-3"
             >
-              saturationDistance
+              colorClassifications
             </RouterLink>
           </li>
           <li>
@@ -100,15 +100,7 @@ useHead({
               :to="{ name: 'advanced' }"
               class="ml-2 text-xs leading-3"
             >
-              lightnessDistance
-            </RouterLink>
-          </li>
-          <li>
-            <RouterLink
-              :to="{ name: 'advanced' }"
-              class="ml-2 text-xs leading-3"
-            >
-              hueDistance
+              defaultColors
             </RouterLink>
           </li>
         </ul>

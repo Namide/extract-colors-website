@@ -1,0 +1,17 @@
+{
+  // Default value if color not found
+  // If defaultColors is false the returned values can be empty
+  defaultColors: false,
+
+  // Default value if color not found
+  // If defaultColors is true the returned values will be calculated by extract-colors
+  defaultColors: true,
+
+  // If defaultColors is and object, all values can be set by colorClassification.
+  defaultColors: {
+    accents: 0xFF0077,
+    vivid: false,
+    dominants: (classifiedColorsPart) => [0xFF5577, 0x775577],
+    dullest: true
+  }
+}
