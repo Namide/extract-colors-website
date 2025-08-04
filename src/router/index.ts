@@ -5,8 +5,9 @@ import NotFoundView from "../views/NotFoundView.vue";
 import GettingStartedView from "@/views/guide/GettingStartedView.vue";
 import EssentialsView from "@/views/guide/EssentialsView.vue";
 import AdvancedView from "@/views/guide/AdvancedView.vue";
+import type { RouterOptions } from "vite-ssg";
 
-export const routes = [
+export const routes: RouterOptions['routes'] = [
   {
     path: "/",
     name: "home",
@@ -45,4 +46,4 @@ export const routes = [
     name: "not-found",
     component: NotFoundView,
   },
-] as const;
+];

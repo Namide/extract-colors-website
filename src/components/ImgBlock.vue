@@ -223,7 +223,7 @@ const displayList = computed(() => {
 
         <div class="relative">
           <TransitionGroup name="list">
-            <div :key="count" class="flex flex-wrap gap-4 justify-center w-full">
+            <div :key="count % displayedColors.length" class="flex flex-wrap gap-4 justify-center w-full">
               <div v-for="{ colors, name } of displayList" class="flex flex-wrap gap-4">
                 <ColorsDisplay :name="name" :colors="colors" :size="colorSquareSize" class="inline-block" />
               </div>
