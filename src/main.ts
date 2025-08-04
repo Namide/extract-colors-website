@@ -5,7 +5,15 @@ import { routes } from "./router";
 
 export const createApp = ViteSSG(
   App,
-  { routes },
+  {
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+      if (to.hash) {
+        // for hash scrolling https://github.com/vuejs/vue-router/issues/2914#issuecomment-1079653414
+        return { el: to.hash };
+      }
+    },
+  },
   ({ app, router, routes, isClient, initialState }) => {
     if (isClient) {
       const _paq = ((window as { _paq?: string[][] })._paq =

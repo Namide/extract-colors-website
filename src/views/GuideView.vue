@@ -29,7 +29,7 @@ useHead({
             </RouterLink>
           </li>
           <li>
-            <RouterLink :to="{ name: 'getting-started' }"> Usage </RouterLink>
+            <RouterLink :to="{ name: 'getting-started', hash: '#usage' }"> Usage </RouterLink>
           </li>
           <li class="menu-title mt-5">
             <span>Essentials</span>
@@ -44,12 +44,12 @@ useHead({
             <RouterLink :to="{ name: 'advanced' }"> Module usage </RouterLink>
           </li>
           <li>
-            <RouterLink :to="{ name: 'advanced' }"> Web Workers </RouterLink>
+            <RouterLink :to="{ name: 'advanced', hash: '#web-workers' }"> Web Workers </RouterLink>
           </li>
-          <li><RouterLink :to="{ name: 'advanced' }"> Options </RouterLink></li>
+          <li><RouterLink :to="{ name: 'advanced', hash: '#options' }"> Options </RouterLink></li>
           <li>
             <RouterLink
-              :to="{ name: 'advanced' }"
+              :to="{ name: 'advanced', hash: '#pixels' }"
               class="ml-2 text-xs leading-3"
             >
               pixels
@@ -57,7 +57,7 @@ useHead({
           </li>
           <li>
             <RouterLink
-              :to="{ name: 'advanced' }"
+              :to="{ name: 'advanced', hash: '#distance' }"
               class="ml-2 text-xs leading-3"
             >
               distance
@@ -65,7 +65,7 @@ useHead({
           </li>
           <li>
             <RouterLink
-              :to="{ name: 'advanced' }"
+              :to="{ name: 'advanced', hash: '#color-validator' }"
               class="ml-2 text-xs leading-3"
             >
               colorValidator
@@ -73,7 +73,7 @@ useHead({
           </li>
           <li>
             <RouterLink
-              :to="{ name: 'advanced' }"
+              :to="{ name: 'advanced', hash: '#cross-origin' }"
               class="ml-2 text-xs leading-3"
             >
               crossOrigin
@@ -81,7 +81,7 @@ useHead({
           </li>
           <li>
             <RouterLink
-              :to="{ name: 'advanced' }"
+              :to="{ name: 'advanced', hash: '#request-mode' }"
               class="ml-2 text-xs leading-3"
             >
               requestMode
@@ -89,7 +89,7 @@ useHead({
           </li>
           <li>
             <RouterLink
-              :to="{ name: 'advanced' }"
+              :to="{ name: 'advanced', hash: '#color-classifications' }"
               class="ml-2 text-xs leading-3"
             >
               colorClassifications
@@ -97,7 +97,7 @@ useHead({
           </li>
           <li>
             <RouterLink
-              :to="{ name: 'advanced' }"
+              :to="{ name: 'advanced', hash: '#default-colors' }"
               class="ml-2 text-xs leading-3"
             >
               defaultColors
