@@ -70,10 +70,10 @@ const displayedColors = computed(() => {
       list.map((name) =>
         classified.value[name]
           ? {
-              enabled: true,
-              name,
-              colors: classified.value[name],
-            }
+            enabled: true,
+            name,
+            colors: classified.value[name],
+          }
           : { enabled: false, name, colors: [] }
       )
     )
@@ -163,6 +163,21 @@ onMounted(() => {
     process[0]();
   }
 });
+
+const displayList = computed(() => {
+
+  const hasRest = displayedColors.value.reduce((total, list, index) => total + (index === (count.value % displayedColors.value.length) ?
+    list.reduce((tot, { colors }) => tot + colors.length, 0) : 0),
+    0) < colors.value.length
+
+  const lists: { name: string, colors: DetailledColor[] }[] = displayedColors.value.filter((_, index) => index === count.value % displayedColors.value.length).flat(2)
+
+  if (hasRest) {
+    lists.push({ name: 'rest', colors: colors.value })
+  }
+
+  return lists
+})
 </script>
 
 <template>
@@ -170,40 +185,25 @@ onMounted(() => {
     <div class="absolute top-0 left-0 w-full h-full">
       <!-- Image -->
       <figure>
-        <img
-          crossorigin="anonymous"
-          :src="src"
-          width="640"
-          height="480"
-          alt="image"
-          class="w-full rounded-xl"
-          @load="emits('load', $event)"
-        />
+        <img crossorigin="anonymous" :src="src" width="640" height="480" alt="image" class="w-full rounded-xl"
+          @load="emits('load', $event)" />
       </figure>
 
       <!-- Loading -->
-      <div
-        :style="{ opacity: loading ? 1 : 0 }"
-        class="absolute flex justify-center items-center top-0 left-0 w-full h-full transition-opacity bg-primary rounded-xl"
-      >
+      <div :style="{ opacity: loading ? 1 : 0 }"
+        class="absolute flex justify-center items-center top-0 left-0 w-full h-full transition-opacity bg-primary rounded-xl">
         <span class="text-white text-2xl font-bold">Loading image</span>
       </div>
     </div>
 
     <Transition>
       <div v-if="!loading && isDisplayingInfo" class="bg-over">
-        <em
-          v-if="displayInfos"
-          class="mb-2 -mt-2 block text-right text-sm italic"
-        >
+        <em v-if="displayInfos" class="mb-2 -mt-2 block text-right text-sm italic">
           Random image from Unsplash
         </em>
         <h2 class="card-title">
           {{ colors.length }} colors found
-          <span
-            class="tooltip font-normal"
-            data-tip="Calculation time (image loading excluded)"
-          >
+          <span class="tooltip font-normal" data-tip="Calculation time (image loading excluded)">
             <div class="badge badge-accent align-text-top font-bold">
               {{ time }}ms
             </div>
@@ -213,81 +213,41 @@ onMounted(() => {
           {{ px }} pixels for calculation (original image is
           {{ naturalPx }} pixels)<br />
         </p>
-        <ColorsDisplay
-          name=""
-          :colors="colors"
-          :size="colorSquareSize"
-          class="mt-2"
-          key="full"
-        />
+        <ColorsDisplay name="" :colors="colors" :size="colorSquareSize" class="mt-2" key="full" />
       </div>
       <div v-else-if="!loading" class="bg-over">
-        <em
-          v-if="!displayInfos"
-          class="absolute block text-xs italic left-1/2 -translate-x-1/2 -translate-y-full -mt-5 text-white text-shadow mb-1 opacity-80"
-        >
+        <em v-if="!displayInfos"
+          class="absolute block text-xs italic left-1/2 -translate-x-1/2 -translate-y-full -mt-5 text-white text-shadow mb-1 opacity-80">
           Random image from Unsplash
         </em>
-        <TransitionGroup name="list" tag="div" class="flex flex-wrap gap-4">
-          <template v-for="(list, index) of displayedColors" :key="index">
-            <div
-              v-if="index === count % displayedColors.length"
-              class="flex flex-wrap gap-4"
-            >
-              <ColorsDisplay
-                v-for="{ colors, name } of list"
-                :name="name"
-                :colors="colors"
-                :size="colorSquareSize"
-                class="inline-block"
-              />
+
+        <div class="relative">
+          <TransitionGroup name="list">
+            <div :key="count" class="flex flex-wrap gap-4 justify-center w-full">
+              <div v-for="{ colors, name } of displayList" class="flex flex-wrap gap-4">
+                <ColorsDisplay :name="name" :colors="colors" :size="colorSquareSize" class="inline-block" />
+              </div>
             </div>
-          </template>
-          <ColorsDisplay
-            name="Full list"
-            :colors="colors"
-            :size="colorSquareSize"
-            class="ml-auto"
-            key="full"
-          />
-        </TransitionGroup>
+          </TransitionGroup>
+        </div>
       </div>
     </Transition>
 
     <!-- info CTA -->
-    <div
-      v-if="!loading && displayInfos"
-      class="form-control absolute top-2 right-2"
-    >
+    <div v-if="!loading && displayInfos" class="form-control absolute top-2 right-2">
       <label class="btn btn-sm btn-accent btn-circle swap swap-rotate">
         <input type="checkbox" v-model="isDisplayingInfo" />
 
         <!-- info icon -->
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          class="swap-off stroke-current"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01"
-          ></path>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="swap-off stroke-current">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01"></path>
         </svg>
 
         <!-- close icon -->
-        <svg
-          class="swap-on fill-current"
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 512 512"
-        >
+        <svg class="swap-on fill-current" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+          viewBox="0 0 512 512">
           <polygon
-            points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49"
-          />
+            points="400 145.49 366.51 112 256 222.51 145.49 112 112 145.49 222.51 256 112 366.51 145.49 400 256 289.49 366.51 400 400 366.51 289.49 256 400 145.49" />
         </svg>
       </label>
     </div>
@@ -312,6 +272,7 @@ onMounted(() => {
 .list-enter-active {
   transition: opacity 0.5s 0.5s ease;
 }
+
 .list-leave-active {
   transition: opacity 0.5s ease;
 }

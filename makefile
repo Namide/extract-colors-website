@@ -11,7 +11,6 @@ install:
 		node:20-slim \
 		npm install
 
-# http://localhost:3000
 dev:
 	cd extract-colors && $(MAKE) build
 	cp -r extract-colors node_modules
@@ -19,7 +18,7 @@ dev:
 		-u "node" \
 		-v $(shell pwd):$(shell pwd) \
 		-w $(shell pwd) \
-		-p 3000\:5173 \
+		-p 5173\:5173 \
 		-e NPM_CONFIG_PREFIX=/home/node/.npm-global \
 		node:20-slim \
 		npm run dev
